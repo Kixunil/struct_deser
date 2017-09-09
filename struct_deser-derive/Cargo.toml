@@ -1,0 +1,18 @@
+[package]
+name = "struct_deser-derive"
+version = "0.1.0"
+authors = ["Martin Habovštiak <martin.habovstiak@gmail.com>"]
+license = "MITNFA"
+description = "Macros 1.1 implementation of #[derive(StructDeser)]"
+homepage = "https://github.com/Kixunil/struct_deser-derive"
+repository = "https://github.com/Kixunil/struct_deser-derive"
+documentation = "https://docs.rs/struct_deser-derive/"
+keywords = ["deserialization", "serialization", "no_std"]
+categories = ["no-std", "rust-patterns", "parsing"]
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = { version = "0.11.11", features = ["full"] }
+quote = "0.3.15"

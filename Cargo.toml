@@ -1,0 +1,17 @@
+[package]
+name = "struct_deser"
+version = "0.1.0"
+authors = ["Martin Habovštiak <martin.habovstiak@gmail.com>"]
+license = "MITNFA"
+description = "Simple (de)serialization of structs from/to bytes."
+homepage = "https://github.com/Kixunil/struct_deser"
+repository = "https://github.com/Kixunil/struct_deser"
+documentation = "https://docs.rs/struct_deser/"
+keywords = ["deserialization", "serialization", "no_std"]
+categories = ["no-std", "rust-patterns", "parsing"]
+
+[dependencies]
+byteorder = "1"
+
+[dev-dependencies]
+struct_deser-derive = "0.1.0"
