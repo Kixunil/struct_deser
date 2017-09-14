@@ -1,6 +1,6 @@
 [package]
 name = "struct_deser"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Martin Habovštiak <martin.habovstiak@gmail.com>"]
 license = "MITNFA"
 description = "Simple (de)serialization of structs from/to bytes."
