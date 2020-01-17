@@ -28,19 +28,12 @@ macro_rules! test_primitive {
 }
 
 // These tests check whether byte ordering isn't changed due to mistake in implementation
-test_primitive!(u16, U16, 42, [42, 0, 0, 42]);
-test_primitive!(u32, U32, 42, [42, 0, 0, 0, 0, 0, 0, 42]);
-test_primitive!(
-    u64,
-    U64,
-    42,
-    [42, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 42]
-);
-test_primitive!(i16, I16, 42, [42, 0, 0, 42]);
-test_primitive!(i32, I32, 42, [42, 0, 0, 0, 0, 0, 0, 42]);
-test_primitive!(
-    i64,
-    I64,
-    42,
-    [42, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 42]
-);
+#[rustfmt::skip::macros(test_primitive)]
+mod test_primitive {
+    test_primitive!(u16, U16, 42, [42, 0, 0, 42]);
+    test_primitive!(u32, U32, 42, [42, 0, 0, 0, 0, 0, 0, 42]);
+    test_primitive!(u64, U64, 42, [42, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 42]);
+    test_primitive!(i16, I16, 42, [42, 0, 0, 42]);
+    test_primitive!(i32, I32, 42, [42, 0, 0, 0, 0, 0, 0, 42]);
+    test_primitive!(i64, I64, 42, [42, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 42]);
+}
