@@ -199,17 +199,17 @@ fn get_byte_order(attrs: &[syn::Attribute]) -> Option<ByteOrder> {
     for attr in attrs {
         if let MetaItem::Word(ref word) = attr.value {
             if word.as_ref() == "be" {
-                byte_order = Some(ByteOrder::BE);
                 if byte_order == Some(ByteOrder::LE) {
                     panic!("Conflicting byte order: you can't specify both Little and Big endian");
                 }
+                byte_order = Some(ByteOrder::BE);
             }
 
             if word.as_ref() == "le" {
-                byte_order = Some(ByteOrder::LE);
                 if byte_order == Some(ByteOrder::BE) {
                     panic!("Conflicting byte order: you can't specify both Little and Big endian");
                 }
+                byte_order = Some(ByteOrder::LE);
             }
         }
     }

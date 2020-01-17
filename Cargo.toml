@@ -14,4 +14,4 @@ categories = ["no-std", "rust-patterns", "parsing"]
 byteorder = "1"
 
 [dev-dependencies]
-struct_deser-derive = "0.1.0"
+struct_deser-derive = {path = "struct_deser-derive"}
