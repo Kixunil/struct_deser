@@ -6,7 +6,7 @@ extern crate syn;
 extern crate quote;
 
 use proc_macro::TokenStream;
-use quote::{Tokens, ToTokens};
+use quote::{ToTokens, Tokens};
 
 #[proc_macro_derive(StructDeser, attributes(struct_deser, be, le))]
 pub fn derive_struct_deser(input: TokenStream) -> TokenStream {
@@ -36,8 +36,8 @@ impl ToTokens for ByteOrder {
 
 // Actual implementation
 fn impl_struct_deser(ast: &syn::DeriveInput) -> quote::Tokens {
-    use syn::{Body, VariantData};
     use quote::Ident;
+    use syn::{Body, VariantData};
 
     let mut res = quote::Tokens::new();
     let body = if let Body::Struct(ref body) = ast.body {
@@ -66,16 +66,20 @@ fn impl_struct_deser(ast: &syn::DeriveInput) -> quote::Tokens {
                 let mut tmp = Tokens::new();
                 tmp.append(format!("{}", field_no));
                 tmp
-            },
+            }
         };
 
         let byte_slice = quote! { bytes[(#byte_len)..(#byte_len + <#ty as _struct_deser::SerializedByteLen>::BYTE_LEN)] };
 
         let (deser_impl, ser_impl) = match byte_order {
-            None => (quote! { _struct_deser::FromBytes::from_bytes(&#byte_slice) },
-                     quote! { _struct_deser::IntoBytes::into_bytes(&self.#field_accessor, &mut #byte_slice); }),
-            Some(bo) => (quote! { _struct_deser::FromBytesOrdered::from_bytes::<_struct_deser::byteorder::#bo>(&#byte_slice) },
-                         quote! { _struct_deser::IntoBytesOrdered::into_bytes::<_struct_deser::byteorder::#bo>(&self.#field_accessor, &mut #byte_slice); }),
+            None => (
+                quote! { _struct_deser::FromBytes::from_bytes(&#byte_slice) },
+                quote! { _struct_deser::IntoBytes::into_bytes(&self.#field_accessor, &mut #byte_slice); },
+            ),
+            Some(bo) => (
+                quote! { _struct_deser::FromBytesOrdered::from_bytes::<_struct_deser::byteorder::#bo>(&#byte_slice) },
+                quote! { _struct_deser::IntoBytesOrdered::into_bytes::<_struct_deser::byteorder::#bo>(&self.#field_accessor, &mut #byte_slice); },
+            ),
         };
 
         deser_body.append(match field.ident {
@@ -142,7 +146,7 @@ fn impl_struct_deser(ast: &syn::DeriveInput) -> quote::Tokens {
 
 // Impls identifier trait
 fn impl_identifier(ast: &syn::DeriveInput, res: &mut Tokens) {
-    use syn::{MetaItem, NestedMetaItem, Lit};
+    use syn::{Lit, MetaItem, NestedMetaItem};
 
     let name = &ast.ident;
 
@@ -152,7 +156,9 @@ fn impl_identifier(ast: &syn::DeriveInput, res: &mut Tokens) {
                 let mut val = None;
                 let mut ty = None;
                 for item in nested {
-                    if let NestedMetaItem::MetaItem(MetaItem::NameValue(ref name, ref value)) = *item {
+                    if let NestedMetaItem::MetaItem(MetaItem::NameValue(ref name, ref value)) =
+                        *item
+                    {
                         if name == "identifier" {
                             val = Some(value);
                         }
@@ -175,7 +181,7 @@ fn impl_identifier(ast: &syn::DeriveInput, res: &mut Tokens) {
                             }
                         });
                         return;
-                    },
+                    }
                     (None, None) => (),
                     (Some(_), Some(_)) => panic!("Identifier and it's type must be inside string"),
                     _ => panic!("Both identifier and type must be specified or none of them"),
