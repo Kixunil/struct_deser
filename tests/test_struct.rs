@@ -35,7 +35,7 @@ struct Integers {
 
 #[test]
 fn main() {
-    use struct_deser::{SerializedByteLen,Identifier,FromBytes,IntoBytes};
+    use struct_deser::{FromBytes, Identifier, IntoBytes, SerializedByteLen};
 
     assert_eq!(Integers::IDENTIFIER, 42);
     assert_eq!(Integers::BYTE_LEN, 58);

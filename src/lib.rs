@@ -54,9 +54,9 @@ use byteorder_real::ByteOrder;
 /// Re-exported essential items from `byteorder` crate.
 /// This is intended mostly for `struct_deser-derive`.
 pub mod byteorder {
-    pub use ::byteorder_real::LE;
-    pub use ::byteorder_real::BE;
     pub use byteorder_real::ByteOrder;
+    pub use byteorder_real::BE;
+    pub use byteorder_real::LE;
 }
 
 /// Defines length (number of bytes) of struct when serialized.
@@ -100,17 +100,17 @@ macro_rules! impl_from_into_bytes {
         }
 
         impl FromBytesOrdered for $type {
-                fn from_bytes<BO: ByteOrder>(bytes: &[u8]) -> Self {
-                        BO::$from(bytes)
-                }
+            fn from_bytes<BO: ByteOrder>(bytes: &[u8]) -> Self {
+                BO::$from(bytes)
+            }
         }
 
         impl IntoBytesOrdered for $type {
-                fn into_bytes<BO: ByteOrder>(&self, bytes: &mut [u8]) {
-                        BO::$into(bytes, *self)
-                }
+            fn into_bytes<BO: ByteOrder>(&self, bytes: &mut [u8]) {
+                BO::$into(bytes, *self)
+            }
         }
-    }
+    };
 }
 
 impl SerializedByteLen for u8 {
@@ -119,29 +119,29 @@ impl SerializedByteLen for u8 {
 
 impl FromBytes for u8 {
     fn from_bytes(bytes: &[u8]) -> Self {
-            bytes[0]
+        bytes[0]
     }
 }
 
 impl IntoBytes for u8 {
     fn into_bytes(&self, bytes: &mut [u8]) {
-            bytes[0] = *self
+        bytes[0] = *self
     }
 }
 
 impl SerializedByteLen for i8 {
-const BYTE_LEN: usize = 1;
+    const BYTE_LEN: usize = 1;
 }
 
 impl FromBytes for i8 {
     fn from_bytes(bytes: &[u8]) -> Self {
-            bytes[0] as i8
+        bytes[0] as i8
     }
 }
 
 impl IntoBytes for i8 {
     fn into_bytes(&self, bytes: &mut [u8]) {
-            bytes[0] = *self as u8
+        bytes[0] = *self as u8
     }
 }
 
@@ -179,10 +179,10 @@ macro_rules! impl_byte_arr {
 
         impl IntoBytes for [u8; $len] {
             fn into_bytes(&self, bytes: &mut [u8]) {
-                    bytes.copy_from_slice(self)
+                bytes.copy_from_slice(self)
             }
         }
-    }
+    };
 }
 
 impl_byte_arr!(0);
