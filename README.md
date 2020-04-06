@@ -3,6 +3,13 @@ Struct (de)serialization
 
 This crate provides very simple way of (de)serializing structs. The main purpose is to aid working with packets.
 
+Maintenance status
+------------------
+
+As you can see from the history of the repository, there wasn't much activity in a while. The main reason for it is that the crate satisfies my needs well and nobody approached me with feature requests, bug repports or pull requests, so I had no way of knowing if people are missing something.
+
+However, in the meantime @xoac created [his own fork of this crate](https://crates.io/crates/endian_codec), which may be more interesting to you. Please go check it first. It's likely that he has more time to maintain his fork than me, so approach him with feature requests first. If he happens to become unresponsive, you may try your luck pinging me. I should have enough time to merge good PRs at least once per week.
+
 Features
 --------
 
